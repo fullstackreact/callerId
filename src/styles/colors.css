@@ -1,0 +1,8 @@
+:root {
+  --dark: rgba(0,0,0,.2);
+  --light-gray: #a2a2a2;
+  --white: #ffffff;
+  --highlight: #48b5e9;
+  --blue: #607D8B;
+  --heading-color: var(--highlight);
+}
