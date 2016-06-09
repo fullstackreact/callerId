@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import styles from './styles.module.css'
 
 import {connect} from 'react-redux'
-import ChatBox from 'components/Chat/ChatBox'
 import VideoView from 'components/Chat/VideoView'
 
 export class Index extends React.Component {
@@ -62,7 +61,7 @@ export class Index extends React.Component {
               {peers.map(peer => {
                 return (
                   <div className={styles.person}>
-                    <VideoView key={peer.id} 
+                    <VideoView key={peer.id}
                       remote={true} peer={peer} ready={ready} rtc={rtc}></VideoView>
                   </div>
                 )
