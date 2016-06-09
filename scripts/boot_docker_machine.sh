@@ -41,7 +41,6 @@ function HELP {
   e_log
   e_log "-p" "provider. Default: ${PROVIDER}"
   e_log "-v" "verbose. Default: ${VERBOSE}"
-  e_log "-s" "number of nodes to start. Default: ${NUM_NODES}"
   e_log "-d" "dry run. Default: ${DRY_RUN}"
   e_log "-y" "skip confirmation. Default: ${SKIP_CONFIRMATION}"
   e_log "-n" "name. Default is: ${CLUSTER_PREFIX}"
@@ -63,8 +62,6 @@ while getopts :vdhp:ys:n:ct: FLAG; do
     d) DRY_RUN=true
         ;;
     n) CLUSTER_PREFIX="$OPTARG"
-        ;;
-    s) NUM_NODES=$OPTARG
         ;;
     t) SPOT_PRICE="$OPTARG"
         ;;
