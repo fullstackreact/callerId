@@ -18,7 +18,7 @@ export class Index extends React.Component {
   }
 
   componentDidMount() {
-    const {actions, webrtc} = this.props;
+    const {actions} = this.props;
     actions.webrtc.init({debug: false});
   }
 

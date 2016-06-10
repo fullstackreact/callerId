@@ -3,7 +3,7 @@ import SimpleWebRTC from 'SimpleWebRTC'
 import freeice from 'freeice'
 
 export const types = createConstants('webrtc')(
-  'RTC_INIT',
+  'INIT',
   'NEW_PEER_ADDED',
   'PEER_STREAM_ADDED',
   'PEER_STREAM_REMOVED',
@@ -12,7 +12,7 @@ export const types = createConstants('webrtc')(
 )
 
 export const reducer = createReducer({
-  [types.RTC_INIT]: (state, {payload}) => ({
+  [types.INIT]: (state, {payload}) => ({
     ...state,
     webrtc: payload
   }),
@@ -59,7 +59,7 @@ export const actions = {
       .on('peerStreamRemoved', (peer) => {
         dispatch({type: types.PEER_STREAM_REMOVED, payload: peer})
       });
-    dispatch({type: types.RTC_INIT, payload: rtc});
+    dispatch({type: types.INIT, payload: rtc});
   },
   newPeer: (peer) => ({type: types.NEW_PEER_ADDED, payload: peer}),
   removePeer: (peer) => ({type: types.PEER_STREAM_REMOVED, payload: peer}),
