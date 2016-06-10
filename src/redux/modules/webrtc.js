@@ -42,7 +42,7 @@ let rtc = null;
 export const actions = {
   init: (cfg) => (dispatch, getState) => {
     rtc = new SimpleWebRTC({
-      url: __RTC_SERVER__,
+      url: __TURN_SERVER__,
       debug: cfg.debug || false,
       peerConnectionConfig: freeice()
     });
