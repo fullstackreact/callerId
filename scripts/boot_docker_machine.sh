@@ -16,6 +16,13 @@ SCRIPT=`basename ${BASH_SOURCE[0]}`
 DM=$(which docker-machine)
 D=$(which docker)
 
+if [ -f "$DIR/../.env" ]; then
+  e_log
+  e_log e_header ".env file found"
+  e_log
+  source "$DIR/../.env"
+fi
+
 if [ -z $DM ]; then
   e_error
   e_error "docker-machine not found"

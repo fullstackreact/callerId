@@ -40,16 +40,16 @@ e_log() {
 e_debug() {
   verbose=$VERBOSE
 
-  if [ $verbose != false ]; then
-    "${@}"
+  if [[ $verbose != false ]]; then
+    "${@}\n"
   fi
 }
 
 e_verbose() {
   verbose=$1
 
-  if [ $verbose != false ]; then
-    printf "$@"
+  if [[ $verbose != false ]]; then
+    "${@}"
   fi
 }
 
