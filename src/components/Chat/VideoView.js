@@ -9,43 +9,25 @@ export class VideoView extends React.Component {
   static propTypes = {
     ready: T.bool,
     remote: T.bool,
+    stream: T.object,
     peer: T.object
   }
 
   componentDidMount() {
-    if (this.props.ready) {
-      this.attachVideo();
+    if (this.props.ready && this.props.stream) {
+      this.attachVideo(this.props.stream);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.ready !== this.props.ready || nextProps.peer !== this.props.peer) {
-      this.attachVideo();
+    if (nextProps.ready && nextProps.stream) {
+      this.attachVideo(nextProps.stream);
     }
   }
 
-  attachVideo() {
-    console.log('attachVideo ->', this.props);
-    this.props.remote ? this.attachRemoteVideo() : this.attachLocalVideo()
-  }
-
-  attachRemoteVideo() {
-    const {peer} = this.props;
+  attachVideo(stream) {
     let node = ReactDOM.findDOMNode(this.refs.videoView);
-    attachMediaStream(peer.stream, node);
-  }
-
-  attachLocalVideo() {
-    const {rtc} = this.props;
-
-    let node = ReactDOM.findDOMNode(this.refs.videoView);
-    rtc.webrtc.startLocalMedia(rtc.config.media, function (err, stream) {
-      if (err) {
-          rtc.emit('localMediaError', err);
-      } else {
-        attachMediaStream(stream, node, rtc.config.localVideo);
-      }
-    });
+    attachMediaStream(stream, node);
   }
 
   render() {

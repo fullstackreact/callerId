@@ -12,7 +12,10 @@ export class Index extends React.Component {
     this.state = {
       ready: false,
       id: null,
-      peers: [],
+      localVideo: {
+        stream: null,
+        config: null
+      },
       messages: []
     }
   }
@@ -23,9 +26,24 @@ export class Index extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.ready !== this.props.ready) {
-      this.props.actions.webrtc.joinRoom('fullstackio')
+    if (nextProps.ready && !this.props.ready) {
+      this.startLocalMedia();
     }
+  }
+
+  startLocalMedia() {
+    const {webrtc, actions} = this.props;
+    actions.webrtc.joinRoom('fullstackio');
+    webrtc.webrtc
+      .startLocalMedia(webrtc.webrtc.config.media, (err, stream) => {
+        if (err) {
+            webrtc.emit('localMediaError', err);
+        } else {
+          this.setState({
+            localStream: stream
+          });
+        }
+    });
   }
 
   goToAbout(evt) {
@@ -36,7 +54,9 @@ export class Index extends React.Component {
   }
 
   render() {
-    const {ready, peers, rtc} = this.props;
+    const {ready, peers, webrtc} = this.props;
+    const {localStream} = this.state;
+
     return (
       <div className={styles.container}>
         <div className={styles.header}>
@@ -48,8 +68,9 @@ export class Index extends React.Component {
         <div className={styles.videoContainer}>
 
           <div className={styles.main}>
-            <VideoView remote={false}
-                ready={ready} rtc={rtc} />
+            <VideoView key={'mine'}
+                ready={ready}
+                stream={localStream} />
           </div>
 
           <div className={styles.peers}>
@@ -59,10 +80,12 @@ export class Index extends React.Component {
             </div>
             <div className={styles.people}>
               {peers.map(peer => {
+                console.log('peer id ', peer.id, this.props.id);
                 return (
                   <div className={styles.person}>
                     <VideoView key={peer.id}
-                      remote={true} peer={peer} ready={ready} rtc={rtc}></VideoView>
+                      ready={ready}
+                      stream={peer.stream} />
                   </div>
                 )
               })}
@@ -91,8 +114,8 @@ Index.contextTypes = {
 }
 
 export default connect(state => ({
-  webrtc: state.webrtc,
+  webrtc: state.webrtc.webrtc,
+  id: state.webrtc.id,
   ready: state.webrtc.ready,
   peers: state.webrtc.peers,
-  rtc: state.webrtc.webrtc
 }))(Index);

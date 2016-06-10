@@ -20,14 +20,14 @@
 
 .content {
   position: relative;
-  /*top: var(--topbar-height);*/
+  top: var(--topbar-height);
   left: 0;
 
   flex: 1;
   order: 1;
 
   .padding {
-    /*padding: var(--padding);*/
+    padding: var(--padding);
   }
 
   @media (--screen-phone-lg) {
