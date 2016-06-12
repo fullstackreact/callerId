@@ -6,20 +6,6 @@ import {connect} from 'react-redux'
 import VideoView from 'components/Chat/VideoView'
 
 export class Index extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ready: false,
-      id: null,
-      localVideo: {
-        stream: null,
-        config: null
-      },
-      messages: []
-    }
-  }
-
   componentDidMount() {
     const {actions} = this.props;
     actions.webrtc.init({debug: false});
@@ -34,16 +20,7 @@ export class Index extends React.Component {
   startLocalMedia() {
     const {webrtc, actions} = this.props;
     actions.webrtc.joinRoom('fullstackio');
-    webrtc.webrtc
-      .startLocalMedia(webrtc.webrtc.config.media, (err, stream) => {
-        if (err) {
-            webrtc.emit('localMediaError', err);
-        } else {
-          this.setState({
-            localStream: stream
-          });
-        }
-    });
+    actions.webrtc.startLocalMedia();
   }
 
   goToAbout(evt) {
@@ -54,8 +31,7 @@ export class Index extends React.Component {
   }
 
   render() {
-    const {ready, peers, webrtc} = this.props;
-    const {localStream} = this.state;
+    const {ready, peers, localStream} = this.props;
 
     return (
       <div className={styles.container}>
@@ -76,7 +52,7 @@ export class Index extends React.Component {
           <div className={styles.peers}>
             <div className={styles.invited}>
               <i className="fa fa-user-plus"></i>
-              Invited
+              Invite
             </div>
             <div className={styles.people}>
               {peers.map(peer => {
@@ -115,6 +91,7 @@ Index.contextTypes = {
 export default connect(state => ({
   webrtc: state.webrtc.webrtc,
   id: state.webrtc.id,
+  localStream: state.webrtc.localStream,
   ready: state.webrtc.ready,
   peers: state.webrtc.peers,
 }))(Index);

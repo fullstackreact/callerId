@@ -57,15 +57,21 @@
     }
 
     .people {
-      flex: 1;
+      /*flex: 1;*/
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
 
       .person {
+        display: inline-block;
         background-color: var(--dark);
         height: var(--person-video-height);
         width: var(--person-video-height);
         border-radius: calc(var(--person-video-height)/2);
+        margin-left: var(--padding);
 
         video {
+          background-color: var(--dark);
           border-radius: calc(var(--person-video-height)/2);
           width: var(--person-video-height);
           height: var(--person-video-height);

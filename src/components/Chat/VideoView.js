@@ -8,7 +8,6 @@ import attachMediaStream from 'attachmediastream'
 export class VideoView extends React.Component {
   static propTypes = {
     ready: T.bool,
-    remote: T.bool,
     stream: T.object,
     peer: T.object
   }

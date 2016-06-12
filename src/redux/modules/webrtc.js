@@ -5,6 +5,10 @@ import freeice from 'freeice'
 export const types = createConstants('webrtc')(
   'INIT',
   'NEW_PEER_ADDED',
+
+  'LOCAL_MEDIA_START',
+  'LOCAL_MEDIA_ERROR',
+
   'PEER_STREAM_ADDED',
   'PEER_STREAM_REMOVED',
   'CONNECTION_READY',
@@ -21,19 +25,22 @@ export const reducer = createReducer({
     ready: true,
     id: payload
   }),
+
+  [types.LOCAL_MEDIA_START]: (state, {payload}) => ({
+    ...state,
+    localStream: payload
+  }),
+
+  [types.LOCAL_MEDIA_ERROR]: (state, {payload}) => ({
+    ...state,
+    localStreamError: payload
+  }),
+
   [types.PEER_STREAM_ADDED]: (state, {payload}) => {
     const peers = state.webrtc.webrtc.getPeers();
-    return {
-      ...state,
-      peers
-    }
+    return {...state, peers}
   },
   [types.PEER_STREAM_REMOVED]: (state, {payload}) => {
-    // let {peers} = state;
-    // const peerIds = peers.map(p => p.id);
-    // const idx = peerIds.indexOf(payload.id);
-    // peers.splice(idx, 1);
-    // console.log('peers ->', peers);
     const peers = state.webrtc.webrtc.getPeers();
     return {...state, peers}
   },
@@ -71,6 +78,17 @@ export const actions = {
   joinRoom: (room) => {
     rtc.joinRoom(room);
     return {type: types.JOIN_ROOM, payload: room}
+  },
+  startLocalMedia: (config = {}) => (dispatch) => {
+    const cfg = Object.assign({}, rtc.config.media, config)
+    rtc.webrtc.startLocalMedia(cfg, (err, stream) => {
+        if (err) {
+            webrtc.emit('localMediaError', err);
+            dispatch({type: types.LOCAL_MEDIA_ERROR, payload: err})
+        } else {
+          dispatch({type: types.LOCAL_MEDIA_START, payload: stream})
+        }
+    });
   }
 }
 
