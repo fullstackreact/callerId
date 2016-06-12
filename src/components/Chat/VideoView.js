@@ -20,7 +20,7 @@ export class VideoView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.ready && nextProps.stream) {
+    if (nextProps.ready && nextProps.stream !== this.props.stream) {
       this.attachVideo(nextProps.stream);
     }
   }
@@ -33,7 +33,8 @@ export class VideoView extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <video className={styles.video} ref='videoView'></video>
+        <video className={styles.video}
+                ref='videoView'></video>
       </div>
     )
   }

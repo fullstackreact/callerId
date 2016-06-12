@@ -80,10 +80,9 @@ export class Index extends React.Component {
             </div>
             <div className={styles.people}>
               {peers.map(peer => {
-                console.log('peer id ', peer.id, this.props.id);
                 return (
-                  <div className={styles.person}>
-                    <VideoView key={peer.id}
+                  <div key={peer.id} className={styles.person}>
+                    <VideoView
                       ready={ready}
                       stream={peer.stream} />
                   </div>

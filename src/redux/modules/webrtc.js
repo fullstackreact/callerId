@@ -21,15 +21,20 @@ export const reducer = createReducer({
     ready: true,
     id: payload
   }),
-  [types.PEER_STREAM_ADDED]: (state, {payload}) => ({
-    ...state,
-    peers: state.peers.concat(payload)
-  }),
+  [types.PEER_STREAM_ADDED]: (state, {payload}) => {
+    const peers = state.webrtc.webrtc.getPeers();
+    return {
+      ...state,
+      peers
+    }
+  },
   [types.PEER_STREAM_REMOVED]: (state, {payload}) => {
-    let {peers} = state;
-    const peerIds = peers.map(p => p.id);
-    const idx = peerIds.indexOf(payload.id);
-    peers.splice(idx, 1);
+    // let {peers} = state;
+    // const peerIds = peers.map(p => p.id);
+    // const idx = peerIds.indexOf(payload.id);
+    // peers.splice(idx, 1);
+    // console.log('peers ->', peers);
+    const peers = state.webrtc.webrtc.getPeers();
     return {...state, peers}
   },
   [types.JOIN_ROOM]: (state, {payload}) => ({
