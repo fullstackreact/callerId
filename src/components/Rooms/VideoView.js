@@ -1,15 +1,13 @@
 import React, { PropTypes as T } from 'react'
 import ReactDOM from 'react-dom'
+import attachMediaStream from 'attachmediastream'
 
 import styles from './styles.module.css';
-
-import attachMediaStream from 'attachmediastream'
 
 export class VideoView extends React.Component {
   static propTypes = {
     ready: T.bool,
-    stream: T.object,
-    peer: T.object
+    stream: T.object
   }
 
   componentDidMount() {
@@ -31,9 +29,9 @@ export class VideoView extends React.Component {
 
   render() {
     return (
-      <div className={styles.container}>
+      <div className={styles.videoContainer}>
         <video className={styles.video}
-                ref='videoView'></video>
+                ref='videoView' />
       </div>
     )
   }

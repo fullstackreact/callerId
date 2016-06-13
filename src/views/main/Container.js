@@ -1,5 +1,7 @@
 import React, { PropTypes as T } from 'react'
 import Header from 'components/Header/Header'
+
+import btnStyles from 'styles/buttons.css'
 import styles from './styles.module.css'
 
 export class Container extends React.Component {

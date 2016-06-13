@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 require('file?name=favicon.ico!./favicon.ico')
 import 'font-awesome/css/font-awesome.css'
+
 import './app.css'
 
 import App from 'containers/App/App'

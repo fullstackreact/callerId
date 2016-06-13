@@ -1,0 +1,35 @@
+@import url('./base.css');
+@import url('./colors.css');
+
+/*buttons*/
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 15px 45px;
+  font-size: 28px;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border: none;
+  border-radius: 50px;
+
+  color: #fff;
+  background-color: var(--highlight);
+  text-shadow: -1px 1px #417cb8;
+
+  &:hover {
+    background-color: #346392;
+    text-shadow: -1px 1px #27496d;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.form {
+  input {
+    font-size: 20px;
+    padding: var(--padding);
+  }
+}
