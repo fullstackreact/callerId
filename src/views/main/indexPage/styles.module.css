@@ -1,24 +1,11 @@
 @import url('../../../styles/base.css');
 @import url('../../../styles/colors.css');
 
-.room {
-}
-
-.actions {
-  text-align: center;
-}
-
-.grid {
-}
-
 .row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-.room {
-  flex: 1;
+  text-align: center;
 }
 
 @media all and ( min-width: 480px ) {

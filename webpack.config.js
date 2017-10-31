@@ -12,6 +12,10 @@ const getConfig = require('hjs-webpack');
 const isDev = NODE_ENV === 'development';
 const isTest = NODE_ENV === 'test';
 
+// devServer config
+const devHost   = process.env.HOST || 'localhost';
+const devPort   = process.env.PORT || 3000;
+
 const root = resolve(__dirname);
 const src = join(root, 'src');
 const modules = join(root, 'node_modules');
@@ -27,7 +31,7 @@ var config = getConfig({
     return {
       'index.html': context.defaultTemplate({
         title: 'callerId',
-        publicPath: isDev ? '//localhost:3000/' : '',
+        publicPath: isDev ? `//${devHost}:${devPort}/` : '',
         meta: {}
       })
     };
@@ -53,6 +57,8 @@ const defines =
     __NODE_ENV__: JSON.stringify(NODE_ENV),
     __DEBUG__: isDev
   });
+
+console.log('defines', defines);
 
 config.plugins = [
   new webpack.DefinePlugin(defines)
@@ -113,6 +119,12 @@ config.resolve.alias = {
 config.module.noParse = ['ws'];
 config.externals = {
   'ws': true
+}
+
+// Dev
+if (isDev) {
+  config.devServer.port = devPort;
+  config.devServer.hostname = devHost;
 }
 
 // console.log(require('prettyjson').render(config));

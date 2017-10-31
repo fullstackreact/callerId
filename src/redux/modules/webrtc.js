@@ -9,6 +9,7 @@ export const types = createConstants('webrtc')(
 
   'LOCAL_MEDIA_START',
   'LOCAL_MEDIA_ERROR',
+  'LOCAL_MEDIA_STOP',
 
   'PEER_STREAM_ADDED',
   'PEER_STREAM_REMOVED',
@@ -37,6 +38,11 @@ export const reducer = createReducer({
   [types.LOCAL_MEDIA_ERROR]: (state, {payload}) => ({
     ...state,
     localStreamError: payload
+  }),
+
+  [types.LOCAL_MEDIA_STOP]: (state, {payload}) => ({
+    ...state,
+    localStream: null
   }),
 
   [types.PEER_STREAM_ADDED]: (state, {payload}) => {
@@ -91,6 +97,7 @@ export const actions = {
     return {type: types.JOIN_ROOM, payload: room}
   },
   leaveRoom: (room) => {
+    rtc.leaveRoom(room);
     return {type: types.LEAVE_ROOM, payload: room}
   },
   startLocalMedia: (config = {}) => (dispatch) => {
@@ -103,6 +110,12 @@ export const actions = {
           dispatch({type: types.LOCAL_MEDIA_START, payload: stream})
         }
     });
+  },
+  stopLocalMedia: () => {
+    rtc.stopLocalVideo();
+    return {
+      type: types.LOCAL_MEDIA_STOP
+    }
   }
 }
 

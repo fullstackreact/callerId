@@ -13,13 +13,6 @@ export class Index extends React.Component {
     const {actions, params} = this.props;
   }
 
-  goToAbout(evt) {
-    const {router} = this.context;
-    const {actions} = this.props;
-    actions.routing.navigateTo('about');
-    return false;
-  }
-
   newChat(evt) {
     evt.preventDefault();
     const {actions} = this.props;
@@ -39,22 +32,18 @@ export class Index extends React.Component {
 
     return (
       <div className={styles.container}>
-        <div className={[styles.grid]}>
-          <div className={[styles.row, styles.smallRow]}>
-            <div className={styles.actions}>
-              <form className={formStyles.form}
-                    onSubmit={this.newChat.bind(this)}>
-                <input name="roomName"
-                    ref="roomName"
-                    className={[formStyles.input]}
-                    placeholder="Get a room (or leave blank for randomly generated one)" />
-                <input type="submit"
-                    className={[formStyles.btn, styles.actions].join(' ')}
-                    onClick={this.newChat.bind(this)}
-                    value="New chat" />
-              </form>
-            </div>
-          </div>
+        <div className={[styles.row, styles.smallRow]}>
+          <form className={formStyles.form}
+                onSubmit={this.newChat.bind(this)}>
+            <input name="roomName"
+                ref="roomName"
+                className={[formStyles.input]}
+                placeholder="Get a room (or leave blank for randomly generated one)" />
+            <input type="submit"
+                className={[formStyles.btn, styles.actions].join(' ')}
+                onClick={this.newChat.bind(this)}
+                value="New chat" />
+          </form>
         </div>
       </div>
     )

@@ -47,7 +47,13 @@ export class VideoIndex extends React.Component {
   leaveRoom(roomName) {
     const {actions} = this.props;
     actions.webrtc.leaveRoom(roomName);
-    actions.routing.navigateTo('/')
+    actions.routing.navigateTo('/');
+  }
+
+  componentWillUnmount() {
+    const {actions} = this.props;
+    actions.webrtc.stopLocalMedia();
+    this.leaveRoom(this.props.roomName);
   }
 
   render() {
